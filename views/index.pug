@@ -1,0 +1,25 @@
+//- <!DOCTYPE html>
+//- html(lang="en")
+//- head
+//-   meta(charset="UTF-8")
+//-   title= title
+//-   link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+//-   script(src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous")
+//-   script(src="js/main.js")
+//-   body
+//-     .container
+//-       h1 The title is #{title}!
+//-     
+//-       if cats.length
+//-         table.table
+//-           thead
+//-             tr
+//-               th Name
+//-               th Weight
+//-           tbody
+//-             each cat in cats
+//-               tr(data-id= cat.id)
+//-                 td= cat.name
+//-                 td= cat.weight 
+//-                 td
+//-                   button.btn.btn-danger.btn-xs.delete X             

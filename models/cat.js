@@ -18,25 +18,50 @@ exports.getOne = function(id, cb) {
   });
 }
 
+exports.update = function(id, updateObj, cb){
+  exports.getAll(function(err, cats) {
+    if(err) return cb(err);
 
+    let cat = cats.filter(cat => cat.id === id)[0];
 
-exports.modifyOne = function(id, cat, cb) {
-exports.getAll(function(err, cats) {
-  if (err) return cb(err)
-    else {
-      cats.map((val, index) => {
-        if (val.id === id) {
-          cat.id = id
-          cats.splice(index , 1)
-          cats.push(cat);
-        }
-      });
-      fs.writeFile(dataFilePath, JSON.stringify(cats), (err) => {
-        cb(err)
-      })
+    if(!cat) {
+      return cb({error: "Cat not found."});
     }
-  });
+
+    let index = cats.indexOf(cat);
+
+    for(let key in updateObj) {
+      cat[key] = updateObj[key];
+    }
+
+    cats[index] = cat;
+
+    fs.writeFile(dataFilePath, JSON.stringify(cats), function(err) {
+        if(err) return cb(err);
+
+        cb(null, cat);
+    });
+  })
 }
+
+
+// exports.modifyOne = function(id, cat, cb) {
+// exports.getAll(function(err, cats) {
+//   if (err) return cb(err)
+//     else {
+//       cats.map((val, index) => {
+//         if (val.id === id) {
+//           cat.id = id
+//           cats.splice(index , 1)
+//           cats.push(cat);
+//         }
+//       });
+//       fs.writeFile(dataFilePath, JSON.stringify(cats), (err) => {
+//         cb(err)
+//       })
+//     }
+//   });
+// }
 
 // exports.modifyOne = function(id, cb) {
 //   exports.getAll(function(err, cats){
@@ -68,9 +93,9 @@ exports.deleteOne = function(id, cb) {
     console.log(cats);
     fs.writeFile(dataFilePath, JSON.stringify(cats), function(err) {
       cb(err);
-    // return cb(null, cats);
+      // return cb(null, cats);
+    });
   });
-});
 }
 
 
@@ -93,7 +118,6 @@ exports.getAll = function(cb) {
 }
 
 exports.create = function(catObj, cb) {
-  console.log(" from cat.js")
   exports.getAll(function(err, cats) {
     if(err) return cb(err);
 
