@@ -18,6 +18,26 @@ exports.getOne = function(id, cb) {
   });
 }
 
+
+
+exports.modifyOne = function(id, cat, cb) {
+exports.getAll(function(err, cats) {
+  if (err) return cb(err)
+    else {
+      cats.map((val, index) => {
+        if (val.id === id) {
+          cat.id = id
+          cats.splice(index , 1)
+          cats.push(cat);
+        }
+      });
+      fs.writeFile(dataFilePath, JSON.stringify(cats), (err) => {
+        cb(err)
+      })
+    }
+  });
+}
+
 // exports.modifyOne = function(id, cb) {
 //   exports.getAll(function(err, cats){
 //     // console.log(cats);

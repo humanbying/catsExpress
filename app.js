@@ -57,7 +57,7 @@ app.route('/cats/:id')
   // res.send(`Here is cat #${req.params.id}! \n`)
 })
 .put((req, res) => {
-  Cat.modifyOne(req.params.id, function(err, catObj){
+  Cat.modifyOne(req.params.id, function(err, catObj, cb){
     if(err){
       res.status(400).send(err);
     } else {
