@@ -8,7 +8,6 @@ const dataFilePath = path.join(__dirname,'./cats.json');
 
 exports.getOne = function(id, cb) {
   exports.getAll(function(err, cats){
-    // console.log(cats);
     if(err) return cb(err);
     const chosenCat = cats.find(function(cat){
       if(id === cat.id) return true;
@@ -24,6 +23,7 @@ exports.update = function(id, updateObj, cb){
 
     let cat = cats.filter(cat => cat.id === id)[0];
 
+    // if(cat === undefined)
     if(!cat) {
       return cb({error: "Cat not found."});
     }
@@ -33,6 +33,8 @@ exports.update = function(id, updateObj, cb){
     for(let key in updateObj) {
       cat[key] = updateObj[key];
     }
+
+
 
     cats[index] = cat;
 
@@ -85,6 +87,7 @@ exports.update = function(id, updateObj, cb){
 
 
 exports.deleteOne = function(id, cb) {
+  // exports.getAll('cat1')
   exports.getAll(function(err, cats){
     // console.log(cats);
     if(err) return cb(err);
@@ -93,14 +96,13 @@ exports.deleteOne = function(id, cb) {
     console.log(cats);
     fs.writeFile(dataFilePath, JSON.stringify(cats), function(err) {
       cb(err);
-      // return cb(null, cats);
+      return cb(null, cats);
     });
   });
 }
 
 
 exports.getAll = function(cb) {
-
   fs.readFile(dataFilePath, (err, buffer) => {
     if(err) {
       return cb(err);
